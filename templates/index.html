@@ -3,35 +3,57 @@
   <head>
     <title>Pregnancy Test Strip Analysis</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
         background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
       }
       h1 {
         color: #333;
         text-align: center;
-        margin: 20px 0;
+        margin-bottom: 20px;
       }
       form {
         background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         max-width: 500px;
-        margin: 0 auto;
-      }
+        width: 100%;
+      } /*
       input[type="file"] {
-        display: block;
-        margin: 10px 0;
+        display: none;
+      } */
+      .file-upload {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
+      .file-upload i {
+        margin-right: 10px;
       }
       canvas {
         max-width: 100%;
         height: auto;
         display: block;
-        margin: 10px 0;
+        margin: 20px 0;
         border: 1px solid #ccc;
+        cursor: crosshair;
       }
       button {
         background-color: #4caf50;
@@ -40,19 +62,23 @@
         padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
+        width: 100%;
+        font-size: 16px;
       }
       @media (max-width: 600px) {
         form {
-          padding: 10px;
-          max-width: 90%;
+          padding: 20px;
         }
       }
     </style>
   </head>
   <body>
-    <h1>Pregnancy Test Strip Analysis</h1>
     <form id="analysis-form">
-      <label for="image">Upload an image of a pregnancy test strip:</label>
+      <h1>Pregnancy Test Strip Analysis</h1>
+      <label for="file-upload" class="file-upload">
+        <i class="fas fa-upload"></i>
+        Upload Image
+      </label>
       <input type="file" id="image" name="image" accept="image/*" required />
       <canvas id="canvas"></canvas>
       <button type="button" id="analyze-btn">Analyze</button>
@@ -73,7 +99,6 @@
           ctx.fill();
         });
       };
-
       const imageInput = document.getElementById("image");
       imageInput.addEventListener("change", (e) => {
         const file = e.target.files[0];
@@ -92,9 +117,10 @@
 
       canvas.addEventListener("click", (e) => {
         const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
+        const x = e.clientX - rect.left; //
         const y = e.clientY - rect.top;
         points.push({ x, y });
+
         drawPoints();
       });
 

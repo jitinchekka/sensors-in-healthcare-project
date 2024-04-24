@@ -14,6 +14,16 @@ const drawPoints = () => {
   });
 };
 
+const f = () => {
+	let canvas = document.getElementById('canvas'); // replace 'yourCanvasId' with the id of your canvas element
+	canvas.addEventListener('click', function (event) {
+		let rect = canvas.getBoundingClientRect(); // this gives you the position of the canvas element
+		let x = event.clientX - rect.left; // calculate the x position within the canvas
+		let y = event.clientY - rect.top; // calculate the y position within the canvas
+		console.log('Point:', { x, y });
+	});
+};
+
 const imageInput = document.getElementById("image");
 imageInput.addEventListener("change", (e) => {
   const file = e.target.files[0];
