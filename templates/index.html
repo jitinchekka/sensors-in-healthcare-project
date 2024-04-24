@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pregnancy Test Strip Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+        margin: 20px 0;
+      }
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      input[type="file"] {
+        display: block;
+        margin: 10px 0;
+      }
+      canvas {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+      }
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      @media (max-width: 600px) {
+        form {
+          padding: 10px;
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pregnancy Test Strip Analysis</h1>
+    <form id="analysis-form">
+      <label for="image">Upload an image of a pregnancy test strip:</label>
+      <input type="file" id="image" name="image" accept="image/*" required />
+      <canvas id="canvas"></canvas>
+      <button type="button" id="analyze-btn">Analyze</button>
+    </form>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      let img;
+      let points = [];
+
+      const drawPoints = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        points.forEach((point) => {
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+          ctx.fillStyle = "red";
+          ctx.fill();
+        });
+      };
+
+      const imageInput = document.getElementById("image");
+      imageInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+          img = new Image();
+          img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            drawPoints();
+          };
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      canvas.addEventListener("click", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        points.push({ x, y });
+        drawPoints();
+      });
+
+      const analyzeBtn = document.getElementById("analyze-btn");
+      analyzeBtn.addEventListener("click", () => {
+        const formData = new FormData();
+        formData.append("image", imageInput.files[0]);
+        formData.append(
+          "points",
+          JSON.stringify(points.map((point) => [point.x, point.y]))
+        );
+
+        fetch("/analyze", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.text())
+          .then((html) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+            document.body.innerHTML = doc.body.innerHTML;
+          })
+          .catch((error) => console.error("Error:", error));
+      });
+    </script>
+  </body>
+</html>
