@@ -87,7 +87,8 @@ def analyze():
             label="Green",
             c="green",
         )
-        plt.scatter([unknown_absorbance[0]], [0], color="black", label="Unknown")
+        plt.scatter([unknown_absorbance[0]], [0],
+                    color="black", label="Unknown")
 
         # Plot and join the points with lines
         plt.plot(b_concs, b_absorbances, color="blue")
@@ -110,7 +111,7 @@ def analyze():
                                std_absorbances[c][i] for c in concs], concs) for i in range(3)])
         print(unknown_conc)
         return render_template(
-            "result.html", plot_url=plot_url, unknown_conc=unknown_conc
+            "result.html", plot_url=plot_url, unknown_conc=unknown_conc, intensities=avg_intentisies, absorbances=unknown_absorbance
         )
     else:
         return "No image uploaded", 400
