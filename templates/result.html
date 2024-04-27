@@ -1,88 +1,118 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Analysis Result</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        background-color: #f0f0f0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      h1 {
-        color: #333;
-        text-align: center;
-        margin-bottom: 20px;
-      }
+
+<head>
+  <title>Analysis Result</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .result {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
       .result {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        max-width: 600px;
-        width: 100%;
-        text-align: center;
+        padding: 20px;
       }
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-      p {
-        font-size: 18px;
-        margin-bottom: 20px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-      }
-      th,
-      td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-      @media (max-width: 600px) {
-        .result {
-          padding: 20px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="result">
-      <h1>Analysis Result</h1>
-      <p>
-        The approximate hCG concentration of the unknown solution is:
-        <strong>{{ unknown_conc }} mIU/mL</strong>
-      </p>
-      <table>
-        <tr>
-          <th>Color</th>
-          <th>Average Intensity</th>
-          <th>Unknown Absorbance</th>
-        </tr>
-        <tr>
-          <td>Blue</td>
-          <td>{{ intensities[0] }}</td>
-          <td>{{ absorbances[0] }}</td>
-        </tr>
-        <tr>
-          <td>Green</td>
-          <td>{{ intensities[1] }}</td>
-          <td>{{ absorbances[1] }}</td>
-        </tr>
-        <tr>
-          <td>Red</td>
-          <td>{{ intensities[2] }}</td>
-          <td>{{ absorbances[2] }}</td>
-        </tr>
-      </table>
-      <img src="data:image/png;base64, {{ plot_url }}" />
+    }
+  </style>
+</head>
+
+<body>
+  <div class="result">
+    <h1>Analysis Result</h1>
+    <p>
+      The approximate hCG concentration of the unknown solution is:
+      <strong>{{ unknown_conc }} mIU/mL</strong>
+    </p>
+    <table>
+      <tr>
+        <th>Color</th>
+        <th>Average Intensity</th>
+        <th>Unknown Absorbance</th>
+      </tr>
+      <tr>
+        <td>Blue</td>
+        <td>{{ intensities[0] }}</td>
+        <td>{{ absorbances[0] }}</td>
+      </tr>
+      <tr>
+        <td>Green</td>
+        <td>{{ intensities[1] }}</td>
+        <td>{{ absorbances[1] }}</td>
+      </tr>
+      <tr>
+        <td>Red</td>
+        <td>{{ intensities[2] }}</td>
+        <td>{{ absorbances[2] }}</td>
+      </tr>
+    </table>
+    <img src="data:image/png;base64, {{ plot_url }}" />
+    <!-- Go back -->
+    <div class="button-container">
+      <a href="/"><button>Back</button></a>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
