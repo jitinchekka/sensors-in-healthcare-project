@@ -1,179 +1,186 @@
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Pregnancy Test Strip Analysis</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    />
-    <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        background-color: #f0f0f0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      .button-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-      }
 
-      button {
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-       /* padding: 10px 20px;*/
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-      }
+<head>
+  <title>Pregnancy Test Strip Analysis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-      #clear-btn {
-        background-color: #f44336;
-      }
-      h1 {
-        color: #333;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      form {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        max-width: 500px;
-        width: 100%;
-      } /*
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #clear-btn {
+      background-color: #f44336;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    /*
       input[type="file"] {
         display: none;
       } */
-      .file-upload {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #4caf50;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-bottom: 20px;
-      }
-      .file-upload i {
-        margin-right: 10px;
-      }
-      canvas {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 20px 0;
-        border: 1px solid #ccc;
-        cursor: crosshair;
-      }
-      button {
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 100%;
-        font-size: 16px;
-      }
-      @media (max-width: 600px) {
-        form {
-          padding: 20px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <form id="analysis-form">
-      <h1>Pregnancy Test Strip Analysis</h1>
-      <label for="file-upload" class="file-upload">
-        <i class="fas fa-upload"></i>
-        Upload Image
-      </label>
-      <input type="file" id="image" name="image" accept="image/*" required />
-      <canvas id="canvas"></canvas>
-      <div class="button-container">
-        <button type="button" id="clear-btn">Clear Points</button>
-        <button type="button" id="analyze-btn">Analyze</button>
-      </div>
-    </form>
-    <script>
-      const canvas = document.getElementById("canvas");
-      const ctx = canvas.getContext("2d");
-      let img;
-      let points = [];
+    .file-upload {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
 
-      const drawPoints = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        points.forEach((point) => {
-          ctx.beginPath();
-          ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
-          ctx.fillStyle = "red";
-          ctx.fill();
-        });
-      };
+    .file-upload i {
+      margin-right: 10px;
+    }
 
-      const imageInput = document.getElementById("image");
-      imageInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          img = new Image();
-          img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            drawPoints();
-          };
-          img.src = reader.result;
+    canvas {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px 0;
+      border: 1px solid #ccc;
+      cursor: crosshair;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <form id="analysis-form">
+    <h1>Pregnancy Test Strip Analysis</h1>
+    <label for="file-upload" class="file-upload">
+      <i class="fas fa-upload"></i>
+      Upload Image
+    </label>
+    <input type="file" id="image" name="image" accept="image/*" required />
+    <canvas id="canvas"></canvas>
+    <div class="button-container">
+      <button type="button" id="clear-btn">Clear Points</button>
+      <button type="button" id="analyze-btn">Analyze</button>
+    </div>
+  </form>
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let img;
+    let points = [];
+
+    const drawPoints = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      points.forEach((point) => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.fillStyle = "red";
+        ctx.fill();
+      });
+    };
+
+    const imageInput = document.getElementById("image");
+    imageInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        img = new Image();
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          drawPoints();
         };
-        reader.readAsDataURL(file);
-      });
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
 
-      canvas.addEventListener("click", (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        points.push({ x, y });
-        drawPoints();
-      });
+    canvas.addEventListener("click", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      points.push({ x, y });
+      drawPoints();
+    });
 
-      const clearBtn = document.getElementById("clear-btn");
-      clearBtn.addEventListener("click", () => {
-        points = [];
-        drawPoints();
-      });
+    const clearBtn = document.getElementById("clear-btn");
+    clearBtn.addEventListener("click", () => {
+      points = [];
+      drawPoints();
+    });
 
-      const analyzeBtn = document.getElementById("analyze-btn");
-      analyzeBtn.addEventListener("click", () => {
-        const formData = new FormData();
-        formData.append("image", imageInput.files[0]);
-        formData.append(
-          "points",
-          JSON.stringify(points.map((point) => [point.x, point.y]))
-        );
+    const analyzeBtn = document.getElementById("analyze-btn");
+    analyzeBtn.addEventListener("click", () => {
+      const formData = new FormData();
+      formData.append("image", imageInput.files[0]);
+      formData.append(
+        "points",
+        JSON.stringify(points.map((point) => [point.x, point.y]))
+      );
 
-        fetch("/analyze", {
-          method: "POST",
-          body: formData,
+      fetch("/analyze", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.text())
+        .then((html) => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+          document.body.innerHTML = doc.body.innerHTML;
         })
-          .then((response) => response.text())
-          .then((html) => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-            document.body.innerHTML = doc.body.innerHTML;
-          })
-          .catch((error) => console.error("Error:", error));
-      });
-    </script>
-  </body>
+        .catch((error) => console.error("Error:", error));
+    });
+  </script>
+</body>
+
 </html>
