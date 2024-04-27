@@ -39,7 +39,6 @@ This project was inspired by the paper "A smartphone-based rapid quantitative de
 ## Author
 - Jitin Chekka
 Contact me at [Email](mailto:jitinchekka2@gmail.com?subject=[GitHub]%20Source%20SIH%20Project)
-<br>
-LinkedIn: [Jitin Chekka](https://www.linkedin.com/in/jitin-krishna-chekka/)
-<br>
-GitHub: [jitinchekka](https://github.com/jitinchekka)
+[![Linkedin](https://i.stack.imgur.com/gVE0j.png) LinkedIn](https://www.linkedin.com/in/jitin-krishna-chekka/)
+&nbsp;
+[![GitHub](https://i.stack.imgur.com/tskMh.png) GitHub](https://github.com/jitinchekka)
